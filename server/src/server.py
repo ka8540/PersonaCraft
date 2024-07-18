@@ -6,9 +6,11 @@ from flask_jwt_extended import JWTManager
 
 try:
     from utilities.swen_344_db_utils import exec_sql_file
+    from api.Signup_api import SignUpApi
 
 except ImportError:
     from utilities.swen_344_db_utils import exec_sql_file
+    from api.Signup_api import SignUpApi
 
 app = Flask(__name__)
 CORS(app)
@@ -19,9 +21,11 @@ app.config['S3_BUCKET_NAME'] = 'profile-picture-docs'
 jwt = JWTManager(app)
 api = Api(app)
 
+api.add_resource(SignUpApi, '/signup', resource_class_kwargs={'bcrypt': bcrypt})
+
 def setup_database():
     print("Loading db")
-    # exec_sql_file('data/data.sql')
+    exec_sql_file('data/data.sql')
 if __name__ == '__main__':
     print("Starting flask")
     setup_database()

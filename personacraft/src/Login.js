@@ -4,6 +4,8 @@ import { Button, Tab, Tabs, TextField } from "@mui/material";
 import { signIn, signUp, confirmSignUp, fetchAuthSession, signOut } from '@aws-amplify/auth';
 import { LOGIN_IMAGE_URL } from './constants'; // Ensure the constants file is in the src directory
 import "./Login.css";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 export default function Login() {
     console.log('Login component rendered');
@@ -66,7 +68,11 @@ export default function Login() {
         try {
             await handleSignOut();
             await signIn({ username: email, password });
-            await fetchAuthSession();
+            const session = await fetchAuthSession();
+            const idToken = session.tokens.idToken.toString();
+            await AsyncStorage.setItem('idToken', idToken);
+            console.log("Token:",session);
+            console.log("Tokens:",idToken);
             navigate('/dashboard');
         } catch (error) {
             console.error('Error signing in', error);
@@ -87,12 +93,31 @@ export default function Login() {
               },
             }
           });
-          localStorage.setItem('userEmailForVerification', email);
-          setShowVerificationForm(true);
+
+          const response = await fetch('http://127.0.0.1:5000/signup', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                name: name,
+                email: email,
+                phoneNumber: phoneNumber,
+                password: password
+            })
+        });
+        
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.message || 'Failed to sign up');
+        }
+
+        localStorage.setItem('userEmailForVerification', email);
+        setShowVerificationForm(true);
         
         } catch (error) {
           console.error('Error signing up:', error);
-          navigate('/dashboard');
           setError(error.message);
         }
     };
