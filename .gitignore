@@ -4,3 +4,6 @@ package-lock.json
 lambda_function.zip
 lambda_function.py
 openai_api_key.env
+private_key.pem
+public_key.pem
+config.py

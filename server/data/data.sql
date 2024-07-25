@@ -4,10 +4,8 @@ DROP TABLE IF EXISTS CharacterImages CASCADE;
 
 CREATE TABLE UserTable (
     user_id SERIAL PRIMARY KEY,
-    name VARCHAR(255) UNIQUE NOT NULL,
+    name VARCHAR(255) NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
-    password VARCHAR(255) NOT NULL,
-    session_key VARCHAR(255) UNIQUE DEFAULT NULL,
     phone_number VARCHAR(20)
 );
 
@@ -25,7 +23,8 @@ CREATE TABLE CharacterTable (
     physical_characteristics TEXT,
     relationship_dynamics TEXT,
     personal_goals TEXT,
-    strengths_weaknesses TEXT
+    strengths_weaknesses TEXT,
+    profile_pic VARCHAR(500) DEFAULT NULL
 );
 
 CREATE TABLE CharacterImages (
@@ -34,3 +33,5 @@ CREATE TABLE CharacterImages (
     image_url TEXT,
     description TEXT
 );
+
+INSERT INTO UserTable (name, email, phone_number) VALUES('Kush Ahir','ka8540@g.rit.edu','+15859575220') 

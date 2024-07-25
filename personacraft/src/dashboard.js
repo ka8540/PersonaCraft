@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import './dashboard.css';
 import { useNavigate } from 'react-router-dom';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { signOut } from '@aws-amplify/auth';
 function Dashboard() {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [formData, setFormData] = useState({
@@ -28,29 +30,43 @@ function Dashboard() {
         }));
     };
 
+    const handleSignOut = async () => {
+        try {
+            await signOut();
+            navigate('/'); 
+        } catch (error) {
+            console.error('Error signing out:', error);
+            alert('Error signing out');
+        }
+    }; 
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsLoading(true); 
-
         try {
+            const idToken = await AsyncStorage.getItem('idToken');
+            console.log(idToken);
             const response = await fetch('http://127.0.0.1:5000/create_character', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${idToken}`
                 },
                 body: JSON.stringify(formData)
             });
 
             if (response.ok) {  
-                navigate('/Login'); 
+                const data = await response.json();
+                const characterId = data.character_id[0]; 
+                navigate('/imagedashboard', { state: { characterId } });
             } else {
                 throw new Error('Failed to create character');
             }
         } catch (error) {
             console.error('Error:', error);
-            alert('Error creating character'); // Display error message
+            alert('Error creating character'); 
         } finally {
-            setIsLoading(false); // Set loading to false after the request completes
+            setIsLoading(false); 
         }
     };
 
@@ -68,9 +84,9 @@ function Dashboard() {
             </header>
             <nav className={`sidebar ${isSidebarOpen ? 'open' : ''}`}>
                 <ul>
-                    <li>Home</li>
-                    <li>Profile</li>
-                    <li>Sign Out</li>
+                    <li onClick={() => navigate('/dashboard')}>Home</li>
+                    <li onClick={() => navigate('/profile')}>Profile</li>
+                    <li onClick={handleSignOut}>Sign Out</li>
                 </ul>
             </nav>
 

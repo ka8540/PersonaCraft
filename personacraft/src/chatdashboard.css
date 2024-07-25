@@ -41,8 +41,7 @@ body, html {
     cursor: pointer;
     color: #000;
     position: absolute;
-    left: -0em;
-    bottom: 0.5em;
+    left: 1em;
 }
 
 .sidebar {
@@ -52,16 +51,16 @@ body, html {
     padding: 1em;
     position: fixed; 
     top: 0; 
-    left: 0; 
-    height: 100vh; 
-    transition: transform 0.3s ease;
-    transform: translateX(-100%); 
-    z-index: 0;
+    left: 0; /* Initially hide the sidebar */
+    height: 100vh; /* Full vertical height */
+    transition: transform 0.3s ease; /* Smooth transition for the sidebar */
+    transform: translateX(-100%); /* Hide the sidebar initially */
+    z-index: 0; /* Ensure the sidebar is below the header */
 }
 
 .sidebar ul {
     list-style-type: none;
-    padding: 3em 0 0 0;
+    padding: 0;
 }
 
 .sidebar li {
@@ -69,11 +68,8 @@ body, html {
     cursor: pointer;
 }
 
-.sidebar li:hover {
-    color: #ff0000; /* Bright white color */
-}
 .sidebar.open {
-    transform: translateX(0);
+    transform: translateX(0); /* Slide the sidebar into view */
 }
 
 .character-creation-form {

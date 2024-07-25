@@ -70,6 +70,8 @@ export default function Login() {
             await signIn({ username: email, password });
             const session = await fetchAuthSession();
             const idToken = session.tokens.idToken.toString();
+            console.log("Len:",idToken.length);
+            console.log(idToken.split('.').length);
             await AsyncStorage.setItem('idToken', idToken);
             console.log("Token:",session);
             console.log("Tokens:",idToken);
@@ -94,24 +96,24 @@ export default function Login() {
             }
           });
 
-          const response = await fetch('http://127.0.0.1:5000/signup', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                name: name,
-                email: email,
-                phoneNumber: phoneNumber,
-                password: password
-            })
-        });
+        //   const response = await fetch('http://127.0.0.1:5000/signup', {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //     },
+        //     body: JSON.stringify({
+        //         name: name,
+        //         email: email,
+        //         phoneNumber: phoneNumber,
+        //         password: password
+        //     })
+        // });
         
-        const data = await response.json();
+        // const data = await response.json();
 
-        if (!response.ok) {
-            throw new Error(data.message || 'Failed to sign up');
-        }
+        // if (!response.ok) {
+        //     throw new Error(data.message || 'Failed to sign up');
+        // }
 
         localStorage.setItem('userEmailForVerification', email);
         setShowVerificationForm(true);
