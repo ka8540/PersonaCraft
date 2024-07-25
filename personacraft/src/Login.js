@@ -57,10 +57,10 @@ export default function Login() {
         try {
             await signOut();
             console.log('User signed out successfully');
-            navigate('/');
+            navigate('/login');
         } catch (error) {
             console.error('Error signing out: ', error);
-            navigate('/');
+            navigate('/login');
         }
     };
     

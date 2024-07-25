@@ -10,7 +10,7 @@ body, html {
     display: flex;
     flex-direction: column;
     height: 100vh;
-    background-color: #fff;
+    background-color: #6b4ae3;
 }
 
 .header {
@@ -45,9 +45,9 @@ body, html {
 }
 
 .sidebar {
-    width: 200px;
-    background-color: #000;
-    color: #fff;
+    width: 170px;
+    background-color: #fff;
+    color: #000;
     padding: 1em;
     position: fixed; 
     top: 0; 
