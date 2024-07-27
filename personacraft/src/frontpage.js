@@ -38,11 +38,12 @@ const FrontPage = () => {
           <img src="https://profile-picture-docs.s3.amazonaws.com/gameplay2.webp" alt="Descriptive Text" className='giphy-embed-2'/>
         </div>
         <div>
-            <button className="join-us-button" onClick={() => navigate('/login')}>Join Us</button>
+            <button className="join-us-button" onClick={() => navigate('/login')}>Let's Chat</button>
         </div>
       </main>
       <footer className="front-page-footer">
-        <p>© 2024 PersonaCraft</p>
+        <p>© 2024 PersonaCraft </p>
+        <p className='by-line'>by Kush Jayesh Ahir</p>
       </footer>
     </div>
   );

@@ -39,7 +39,7 @@ def get_character_description(prompt):
             json={
                 'model': 'gpt-4o',
                 'messages': [{'role': 'user', 'content': prompt}], 
-                'max_tokens': 50
+                'max_tokens': 150
             }
         )
     if response.status_code == 200:
@@ -118,7 +118,7 @@ def get_character_details(character_id):
     print(result)
     return result
 
-def get_response(prompt):
+def get_response(prompt,user_id,character_id):
     print("Inside response")
     response = requests.post(
         'https://api.openai.com/v1/chat/completions',
@@ -135,6 +135,11 @@ def get_response(prompt):
 
     if response.status_code == 200:
         generated_response = response.json().get('choices')[0].get('message', {}).get('content', 'No response generated')
+        stored_response = store_chat(generated_response,user_id,character_id,'character')
+
+        if not stored_response:
+            return make_response(jsonify({"response":"Internal error"}),400)
+        
         return jsonify({"response": generated_response})
     else:
         error_info = response.json()
@@ -161,4 +166,10 @@ def get_profile(email):
     result = exec_get_all(query,(email,))
     return result 
 
-
+def store_chat(message,user_id,character_id,sender):
+    query = '''INSERT INTO ConversationTable (user_id, character_id, message, sender, timestamp) VALUES (%s, %s, %s, %s, NOW());'''
+    result = exec_commit(query,(user_id,character_id,message,sender))
+    check_query = '''SELECT conversation_id FROM ConversationTable WHERE character_id = %s ORDER BY timestamp DESC LIMIT 1;'''
+    check_result = exec_get_one(check_query,(character_id,))
+    print("Check Result:",check_result)
+    return check_result

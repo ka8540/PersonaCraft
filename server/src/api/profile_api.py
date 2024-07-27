@@ -32,3 +32,4 @@ class ProfileAPI(Resource):
         print(response)
         return jsonify(response)
     
+    

@@ -99,7 +99,7 @@ function ImageDashboard() {
             <nav className={`sidebar ${isSidebarOpen ? 'open' : ''}`}>
                 <ul>
                     <li onClick={() => navigate('/dashboard')} >Home</li>
-                    <li>Profile</li>
+                    <li onClick={() => navigate('/profile')}>Profile</li>
                     <li onClick={handleSignOut}>Sign Out</li>
                 </ul>
             </nav>

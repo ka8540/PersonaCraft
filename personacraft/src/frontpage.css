@@ -101,7 +101,7 @@ html, body {
   .image-size-2{
     width: 35%;
     position: absolute;
-    right: 750px;
+    right: 780px;
     top: 200px;
     z-index: 0;
     opacity:90%;
@@ -163,4 +163,14 @@ html, body {
     text-align: center;
     padding: 10px;
     color: rgb(0, 0, 0);
+
   }
+
+  .front-page-footer p {
+    margin: 5px 0;
+  }  
+
+.by-line{
+    margin-top: 0;
+    font-size: small;
+}  

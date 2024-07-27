@@ -46,7 +46,7 @@ const Profile = () => {
     const handleSignOut = async () => {
         try {
             await signOut();
-            navigate('/'); 
+            navigate('/login'); 
         } catch (error) {
             console.error('Error signing out:', error);
             alert('Error signing out');

@@ -110,7 +110,7 @@ function ChatDashboard() {
             <nav className={`sidebar ${isSidebarOpen ? 'open' : ''}`}>
                 <ul>
                     <li onClick={() => navigate('/dashboard')}>Home</li>
-                    <li>Profile</li>
+                    <li onClick={() => navigate('/profile')}>Profile</li>
                     <li onClick={handleSignOut}>Sign Out</li>
                 </ul>
             </nav>
@@ -157,7 +157,13 @@ function ChatDashboard() {
                             disabled={isLoading}
                         />
                         <button type="submit" disabled={isLoading}>
-                            {isLoading ? 'Sending...' : 'Send'}
+                            {isLoading ? (
+                                <svg className="spinner" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                    <circle className="path" cx="12" cy="12" r="10" stroke="#007bff" stroke-width="4" stroke-linecap="round" />
+                                </svg>
+                            ) : (
+                                <i className="fas fa-paper-plane"></i>
+                            )}
                         </button>
                     </form>
                 </div>

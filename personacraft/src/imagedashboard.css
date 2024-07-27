@@ -95,8 +95,8 @@ body, html {
 }
 
 .image-item img {
-    width: 100px;
-    height: 100px;
+    width: 300px;
+    height: 300px;
     object-fit: cover;
 }
 

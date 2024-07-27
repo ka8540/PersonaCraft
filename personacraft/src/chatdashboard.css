@@ -139,8 +139,8 @@ body, html {
 }
 
 .image-item img {
-    width: 100px;
-    height: 100px;
+    width: 200px;
+    height: 200px;
     object-fit: cover;
 }
 
@@ -190,7 +190,7 @@ button {
 }
 
 .chat-message p {
-    background-color: #f1f1f1;
+    background-color: #e24eff;
     padding: 10px;
     border-radius: 10px;
     max-width: 60%;
@@ -229,29 +229,56 @@ button {
     color: #fff;
 }
 
+
 .chat-input-form {
-    display: flex;
-    align-items: center;
+    position: relative;
+    width: 100%;
 }
 
 .chat-input-form input {
-    flex: 1;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    margin-right: 10px;
+    width: 100%;
+    padding: 15px;
+    padding-right: 50px; /* Add space for the button */
+    border: 1px solid #000;
+    border-radius: 25px;
+    box-sizing: border-box;
+    margin-top: 0;
+}
+
+.chat-input-form input:focus {
+    border-color: #007bff;
+    outline: none;
 }
 
 .chat-input-form button {
-    padding: 10px 20px;
+    position: absolute;
+    right: 10px;
+    top: 10%; 
+    transform: translateY(-50%);
+    width: 45px;
+    height: 45px;
+    padding: 0;
     border: none;
-    border-radius: 5px;
-    background-color: #007bff;
-    color: #fff;
+    background-color: transparent;
+    border-radius: 50%;
+    color: #000;
     cursor: pointer;
     font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s;
 }
 
 .chat-input-form button:disabled {
-    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.spinner {
+    animation: spin 1s linear infinite;
 }

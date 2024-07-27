@@ -82,9 +82,9 @@ body, html {
     margin: auto;
     margin-top: 6%;
     padding: 20px;
-    background-color: rgba(255, 255, 255, 0.9); 
+    background-color: #fff; 
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
-    border-radius: 20px; 
+    border-radius: 30px; 
     display: flex;
     flex-direction: column;
     overflow-y: auto; 
@@ -143,8 +143,8 @@ body, html {
 }
 
 .image-item img {
-    width: 100px;
-    height: 100px;
+    width: 250px;
+    height: 250px;
     object-fit: cover;
 }
 
@@ -194,7 +194,7 @@ button {
 }
 
 .chat-message p {
-    background-color: #f1f1f1;
+    background-color: #ff90f9;
     padding: 10px;
     border-radius: 10px;
     max-width: 60%;
@@ -234,28 +234,70 @@ button {
 }
 
 .chat-input-form {
-    display: flex;
-    align-items: center;
+    position: relative;
+    width: 100%;
 }
 
 .chat-input-form input {
-    flex: 1;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    margin-right: 10px;
+    width: 100%;
+    padding: 15px;
+    padding-right: 50px; 
+    border: 1px solid #000;
+    border-radius: 25px;
+    box-sizing: border-box;
+    margin-top: 0;
+}
+
+.chat-input-form input:focus {
+    border-color: #007bff;
+    outline: none;
 }
 
 .chat-input-form button {
-    padding: 10px 20px;
+    position: absolute;
+    right: 10px;
+    top: 10%; 
+    transform: translateY(-50%);
+    width: 45px;
+    height: 45px;
+    padding: 0;
     border: none;
-    border-radius: 5px;
-    background-color: #007bff;
-    color: #fff;
+    background-color: transparent;
+    border-radius: 50%;
+    color: #000;
     cursor: pointer;
     font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s;
 }
 
 .chat-input-form button:disabled {
-    background-color: #ccc;
+    cursor: not-allowed;
 }
+
+@keyframes spin {
+    0% {
+        stroke-dasharray: 1, 150;
+        stroke-dashoffset: 0;
+    }
+    50% {
+        stroke-dasharray: 90, 150;
+        stroke-dashoffset: -35;
+    }
+    100% {
+        stroke-dasharray: 90, 150;
+        stroke-dashoffset: -124;
+    }
+}
+
+.spinner {
+    animation: spin 1.5s ease-in-out infinite;
+}
+
+.path {
+    stroke: #007bff;
+    stroke-linecap: round;
+}
+

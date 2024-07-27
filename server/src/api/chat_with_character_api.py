@@ -4,7 +4,7 @@ import requests
 import cognitojwt
 from dotenv import load_dotenv
 import sys
-from db.character_creation import get_user_id, get_character_details, get_response, get_image
+from db.character_creation import get_user_id, get_character_details, get_response, get_image,store_chat
 
 load_dotenv()
 API_KEY = sys.argv[1]
@@ -35,6 +35,12 @@ class ChatWithCharacter(Resource):
             args = parser.parse_args()
             character_id = args['character_id']
             user_message = args['message']
+            message_stored = store_chat(user_message,user_id,character_id,'user')
+            print(message_stored)
+
+            if not message_stored:
+                return make_response(jsonify({"Error":"Internal Error "}),400)
+            
 
             fetch_data = get_character_details(character_id)
 
@@ -49,8 +55,7 @@ class ChatWithCharacter(Resource):
                       f"Strengths and weaknesses: {strengths_weaknesses}. "
                       f"You should respond as this character. The user says: {user_message}")
 
-            chat_result = get_response(prompt)
-
+            chat_result = get_response(prompt,user_id,character_id)
             return chat_result
 
         except cognitojwt.exceptions.CognitoJWTException as e:
