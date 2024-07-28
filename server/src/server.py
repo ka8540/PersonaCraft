@@ -21,6 +21,7 @@ from api.character_creation_api import CharacterImage
 from api.chat_with_character_api import ChatWithCharacter
 from api.chat_with_character_api import ProfilePic
 from api.profile_api import ProfileAPI
+from api.chat_storage_api import StoredCharactersAPI,StoredChatAPI
 app = Flask(__name__)
 CORS(app)
 bcrypt = Bcrypt(app)
@@ -37,6 +38,9 @@ api.add_resource(CharacterImage,'/character_image/<int:character_id>')
 api.add_resource(ChatWithCharacter,'/chat_with_character')
 api.add_resource(ProfilePic,'/profile_pic/<int:character_id>')
 api.add_resource(ProfileAPI,'/profile')
+api.add_resource(StoredCharactersAPI,'/getchacters')
+api.add_resource(StoredChatAPI,'/stored_chat')
+
 
 
 def setup_database():

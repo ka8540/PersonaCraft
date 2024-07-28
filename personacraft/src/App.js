@@ -6,6 +6,7 @@ import Login from './Login';
 import Dashboard from './dashboard';
 import Profile from './profile';
 import FrontPage from './frontpage';
+import CharacterPage from './CharacterPage';
 import './App.css';
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/imagedashboard" element={<ImageDashboard />} />
           <Route path="/chatdashboard" element={<ChatDashboard />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/characterpage" element={<CharacterPage />} />
         </Routes>
       </div>
     </Router>
