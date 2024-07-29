@@ -2,7 +2,7 @@ import React, { useState,useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import { Button, Tab, Tabs, TextField } from "@mui/material";
 import { signIn, signUp, confirmSignUp, fetchAuthSession, signOut } from '@aws-amplify/auth';
-import { LOGIN_IMAGE_URL } from './constants'; // Ensure the constants file is in the src directory
+import { LOGIN_IMAGE_URL } from './constants'; 
 import "./Login.css";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -75,7 +75,7 @@ export default function Login() {
             await AsyncStorage.setItem('idToken', idToken);
             console.log("Token:",session);
             console.log("Tokens:",idToken);
-            navigate('/dashboard');
+            navigate('/characterpage');
         } catch (error) {
             console.error('Error signing in', error);
             setError(error.message);

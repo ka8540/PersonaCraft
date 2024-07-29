@@ -1,48 +1,116 @@
-import React, { useState }  from 'react';
+import React, { useState, useEffect } from 'react';
 import './characterpage.css';
 import { useNavigate } from 'react-router-dom';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { signOut } from '@aws-amplify/auth';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-function CharacterPage () {  
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);  
+function CharacterPage() {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [selectedDiv, setSelectedDiv] = useState(null);
+  const [characters, setCharacters] = useState([]);
   const navigate = useNavigate();
-  const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen);
-};
 
-const handleSignOut = async () => {
+  useEffect(() => {
+    const fetchCharacters = async () => {
+      try {
+        const idToken = await AsyncStorage.getItem('idToken');
+        console.log("TOken in Page:",idToken);
+        const response = await fetch('http://127.0.0.1:5000/getchacters', {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${idToken}`,
+            'Content-Type': 'application/json'
+          }
+        });
+        const data = await response.json();
+        if (response.ok) {
+          setCharacters(data.characters || []);
+        } else {
+          console.error(data.message);
+        }
+      } catch (error) {
+        console.error('Error fetching characters:', error);
+      }
+    };
+
+    fetchCharacters();
+  }, []);
+
+  const handleSignOut = async () => {
     try {
-        await signOut();
-        navigate('/login'); 
+      await signOut();
+      navigate('/login');
     } catch (error) {
-        console.error('Error signing out:', error);
-        alert('Error signing out');
+      console.error('Error signing out:', error);
+      alert('Error signing out');
     }
-};
+  };
+
+  const handleDivClick = (divName, navigateTo) => {
+    setSelectedDiv(divName);
+    navigate(navigateTo);
+  };
+
   return (
     <div className='character-container'>
-      <header className="character-header">
-                <button className="character-menu-button" onClick={toggleSidebar}>
-                    ☰
-                </button>
-                <h1 className="character-title">PersonaCraft</h1>
-      </header>
-      <nav className={`character-sidebar ${isSidebarOpen ? 'open' : ''}`}>
-                <ul>
-                    <li onClick={() => navigate('/dashboard')}>Home</li>
-                    <li onClick={() => navigate('/profile')}>Profile</li>
-                    <li onClick={handleSignOut}>Sign Out</li>
-                </ul>
+      <div className='character-sidebar'>
+        <h1 className='page-name'>PersonaCraft</h1>
+        <div
+          className={`character-home ${selectedDiv === 'home' ? 'selected' : ''}`}
+          onClick={() => handleDivClick('home', '/characterpage')}
+        >
+          <span className="material-symbols-outlined">
+            home
+          </span>
+          Home
+        </div>
 
-      </nav>
+        <div
+          className={`character-profile ${selectedDiv === 'profile' ? 'selected' : ''}`}
+          onClick={() => handleDivClick('profile', '/profile')}
+        >
+          <span className="material-symbols-outlined">
+            account_circle
+          </span>
+          Profile
+        </div>
 
-      <div className="div-sidebard">
-        <p>Hello</p>
+        <div
+          className={`character-signout ${selectedDiv === 'signout' ? 'selected' : ''}`}
+          onClick={handleSignOut}
+        >
+          <span className="material-symbols-outlined">
+            logout
+          </span>
+          Signout
+        </div>
       </div>
+      <div className='mainComponent'>
+        <div className='cool-line'>Imagine, Create, Connect</div>
+        <div className='chat-dashboard'>
+          <h4 className='chat-headingtext'>Unleash your imagination and create a friend who understands you like no one else</h4>
+          {characters.length === 0 ? (
+              <div className='chat-dashboard-comp' onClick={() => navigate('/dashboard')}>Create new character +</div>
+            ) : (
+              <>
+                <div className='flex-comp'>
+                  {characters.map((character, index) => (
+                    <div key={index} className='chat-dashboard-comp' onClick={() => navigate('/characterchat', { state: { characterId: character.character_id, characterName: character.character_name } })}>
+                    {character.character_name}
+                  </div>
+                  ))}
+                  <div className='chat-dashboard-comp create-new' onClick={() => navigate('/dashboard')}>
+                    Create new character +
+                  </div>  
+                </div>
+              </>
 
+            )}
+
+        </div>
+      </div>
     </div>
   );
-};
+}
 
 export default CharacterPage;

@@ -84,7 +84,7 @@ function Dashboard() {
             </header>
             <nav className={`sidebar ${isSidebarOpen ? 'open' : ''}`}>
                 <ul>
-                    <li onClick={() => navigate('/dashboard')}>Home</li>
+                    <li onClick={() => navigate('/characterpage')}>Home</li>
                     <li onClick={() => navigate('/profile')}>Profile</li>
                     <li onClick={handleSignOut}>Sign Out</li>
                 </ul>

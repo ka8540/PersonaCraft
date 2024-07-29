@@ -34,7 +34,7 @@ class StoredCharactersAPI(Resource):
             if not response:
                 return make_response(jsonify({"Message":"No Chacters Available"}),201)
             
-            return jsonify({"characters":response})
+            return jsonify({"characters": response})
         
         except cognitojwt.exceptions.CognitoJWTException as e:
             return make_response(jsonify({'message': str(e)}), 401)
