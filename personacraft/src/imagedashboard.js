@@ -5,10 +5,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { signOut } from '@aws-amplify/auth';
 
 function ImageDashboard() {
+    const [selectedDiv, setSelectedDiv] = useState(null);
     const [images, setImages] = useState([]);
     const [selectedImage, setSelectedImage] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
-    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const navigate = useNavigate();
     const location = useLocation();
     const { characterId } = location.state || {};
@@ -84,25 +84,46 @@ function ImageDashboard() {
         }
     };
 
-    const toggleSidebar = () => {
-        setIsSidebarOpen(!isSidebarOpen);
-    };
+
+    const handleDivClick = (divName, navigateTo) => {
+        setSelectedDiv(divName);
+        navigate(navigateTo);
+      };
 
     return (
         <div className="container">
-            <header className="header">
-                <button className="menu-button" onClick={toggleSidebar}>
-                    ☰
-                </button>
-                <h1 className="title">PersonaCraft</h1>
-            </header>
-            <nav className={`sidebar ${isSidebarOpen ? 'open' : ''}`}>
-                <ul>
-                    <li onClick={() => navigate('/characterpage')} >Home</li>
-                    <li onClick={() => navigate('/profile')}>Profile</li>
-                    <li onClick={handleSignOut}>Sign Out</li>
-                </ul>
-            </nav>
+            <div className='characters-sidebar'>
+            <h1 className='pages-name'>PersonaCraft</h1>
+            <div
+            className={`characters-home ${selectedDiv === 'home' ? 'selected' : ''}`}
+            onClick={() => handleDivClick('home', '/characterpage')}
+            >
+            <span className="material-symbols-outlined">
+                home
+            </span>
+            Home
+            </div>
+
+            <div
+            className={`characters-profile ${selectedDiv === 'profile' ? 'selected' : ''}`}
+            onClick={() => handleDivClick('profile', '/profile')}
+            >
+            <span className="material-symbols-outlined">
+                account_circle
+            </span>
+            Profile
+            </div>
+
+            <div
+            className={`characters-signout ${selectedDiv === 'signout' ? 'selected' : ''}`}
+            onClick={handleSignOut}
+            >
+            <span className="material-symbols-outlined">
+                logout
+            </span>
+            Signout
+            </div>
+        </div>
 
             <div className="character-creation-form">
                 {isLoading ? (

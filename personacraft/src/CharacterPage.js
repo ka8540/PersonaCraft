@@ -5,8 +5,7 @@ import { signOut } from '@aws-amplify/auth';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function CharacterPage() {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [selectedDiv, setSelectedDiv] = useState(null);
+  const [selectedDiv, setSelectedDiv] = useState('home');
   const [characters, setCharacters] = useState([]);
   const navigate = useNavigate();
 

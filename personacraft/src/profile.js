@@ -5,10 +5,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { signOut } from '@aws-amplify/auth';
 
 const Profile = () => {
+    const [selectedDiv, setSelectedDiv] = useState('profile');
     const [profileData, setProfileData] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -24,7 +24,7 @@ const Profile = () => {
 
                 if (response.ok) {
                     const data = await response.json();
-                    const profile = data[0]; // Assuming the response format is [('Kush Ahir', 'ka8540@g.rit.edu', '+15859575220')]
+                    const profile = data[0];
                     setProfileData({
                         name: profile[0],
                         email: profile[1],
@@ -53,34 +53,45 @@ const Profile = () => {
         }
     };
 
-    const toggleSidebar = () => {
-        setIsSidebarOpen(!isSidebarOpen);
+    const handleDivClick = (divName, navigateTo) => {
+        setSelectedDiv(divName);
+        navigate(navigateTo);
     };
-
-    if (isLoading) {
-        return <div className="loading">Loading...</div>;
-    }
-
-    if (error) {
-        return <div className="error">Error: {error}</div>;
-    }
 
     return (
         <div className="profile-container">
-            <header className="header">
-                <button className="menu-button" onClick={toggleSidebar}>
-                    ☰
-                </button>
-                <h1 className="title">PersonaCraft</h1>
-            </header>
-            <nav className={`sidebar ${isSidebarOpen ? 'open' : ''}`}>
-                <ul>
-                    <li onClick={() => navigate('/characterpage')}>Home</li>
-                    <li onClick={() => navigate('/profile')}>Profile</li>
-                    <li onClick={handleSignOut}>Sign Out</li>
-                </ul>
-            </nav>
-            {profileData && (
+            <div className='profile-sidebar'>
+            <h1 className='p-name'>PersonaCraft</h1>
+            <div
+                className={`c-home ${selectedDiv === 'home' ? 'selected' : ''}`}
+                onClick={() => handleDivClick('home', '/characterpage')}
+                >
+                <span className="material-symbols-outlined">
+                    home
+                </span>
+                Home
+                </div>
+
+                <div
+                className={`c-profile ${selectedDiv === 'profile' ? 'selected' : ''}`}
+                onClick={() => handleDivClick('profile', '/profile')}
+                >
+                <span className="material-symbols-outlined">
+                    account_circle
+                </span>
+                Profile
+                </div>
+
+                <div
+                className={`c-signout ${selectedDiv === 'signout' ? 'selected' : ''}`}
+                onClick={handleSignOut}
+                >
+                <span className="material-symbols-outlined">
+                    logout
+                </span>
+                Signout
+                </div>
+                {profileData && (
                 <div className="profile-card">
                     <h1 className="profile-title">Profile</h1>
                     <p><strong>Name:</strong> {profileData.name}</p>
@@ -88,6 +99,7 @@ const Profile = () => {
                     <p><strong>Phone Number:</strong> {profileData.phone_number}</p>
                 </div>
             )}
+            </div>
         </div>
     );
 };
