@@ -13,6 +13,7 @@ function CharacterChat() {
     const [fetchedCharacterId, setFetchedCharacterId] = useState(null);
     const navigate = useNavigate();
     const location = useLocation();
+    const [characters, setCharacters] = useState([]);
     const { characterName } = location.state || {};
 
     useEffect(() => {
@@ -122,10 +123,46 @@ function CharacterChat() {
         }
     };
 
-    const handleDivClick = (divName, navigateTo) => {
-        setSelectedDiv(divName);
-        navigate(navigateTo);
-      };
+    const handleDivClick = (characterName, navigateTo, characterId) => {
+        setSelectedDiv(characterName); 
+        navigate(navigateTo, { state: { characterId, characterName } });
+    };
+
+    const toggleDropdown = (menu) => {
+        if (selectedDiv === menu) {
+            setSelectedDiv(''); 
+        } else {
+            setSelectedDiv(menu); 
+        }
+    } 
+
+    const fetchCharacters = async () => {
+        try {
+            const idToken = await AsyncStorage.getItem('idToken');
+            console.log("Token in Page:", idToken);
+            const response = await fetch('http://127.0.0.1:5000/getchacters', { 
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${idToken}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+            const data = await response.json();
+            if (response.ok) {
+                setCharacters(data.characters || []);
+            } else {
+                console.error(data.message);
+            }
+        } catch (error) {
+            console.error('Error fetching characters:', error);
+        }
+    };
+
+    useEffect(() => {
+        if (selectedDiv === 'chat-history') {
+            fetchCharacters();
+        }
+    }, [selectedDiv]);
 
     return (
         <div className="container">
@@ -149,6 +186,30 @@ function CharacterChat() {
                 account_circle
             </span>
             Profile
+            </div>
+
+            <div className='dropdown'>
+             <div
+            className={`dropdown-header ${selectedDiv === 'chat-history' ? 'selected' : ''}`}
+            onClick={() => toggleDropdown('chat-history')}
+        >
+            <span className="material-symbols-outlined">
+                forum
+            </span>
+            History
+                </div>
+                {selectedDiv === 'chat-history' && (
+                    <div className='dropdown-content'>
+                        {characters.map((char, index) => (
+                            <div key={index} onClick={() => handleDivClick(char.character_name, '/characterchat', char.character_id)}>{char.character_name}</div>
+                        ))}
+                        <div onClick={() => handleDivClick('+ New', '/dashboard')}>
+                        <span class="material-symbols-outlined">
+                            add
+                            </span>
+                            New</div>
+                    </div>
+                )}
             </div>
 
             <div
