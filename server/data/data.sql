@@ -8,7 +8,8 @@ CREATE TABLE UserTable (
     name VARCHAR(255) NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
     phone_number VARCHAR(20),
-    profile_pic VARCHAR(500) DEFAULT NULL
+    profile_pic VARCHAR(500) DEFAULT NULL,
+    background_image VARCHAR(500) DEFAULT NULL
 );
 
 CREATE TABLE CharacterTable (

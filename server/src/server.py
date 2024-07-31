@@ -22,10 +22,16 @@ from api.chat_with_character_api import ChatWithCharacter
 from api.chat_with_character_api import ProfilePic
 from api.profile_api import ProfileAPI
 from api.chat_storage_api import StoredCharactersAPI,StoredChatAPI
+from api.profile_pic_api import UploadProfilePicAPI
+from api.profile_pic_api import UploadCharacterImageAPI
+from api.profile_pic_api import BackgroundImageAPI
+
 app = Flask(__name__)
 CORS(app)
 bcrypt = Bcrypt(app)
-
+app.config['SECRET_KEY'] = 'your_secret_key'
+app.config['JWT_SECRET_KEY'] = 'your_jwt_secret_key'
+app.config['S3_BUCKET_NAME'] = 'profile-picture-docs'
 # Flask app configuration
 app.config['SECRET_KEY'] = SECRET_KEY
 
@@ -40,7 +46,9 @@ api.add_resource(ProfilePic,'/profile_pic/<int:character_id>')
 api.add_resource(ProfileAPI,'/profile')
 api.add_resource(StoredCharactersAPI,'/getchacters')
 api.add_resource(StoredChatAPI,'/stored_chat')
-
+api.add_resource(UploadProfilePicAPI,'/upload_image',resource_class_kwargs={'s3_bucket': app.config['S3_BUCKET_NAME']})
+api.add_resource(UploadCharacterImageAPI,'/character_image',resource_class_kwargs={'s3_bucket': app.config['S3_BUCKET_NAME']})
+api.add_resource(BackgroundImageAPI,'/background_image',resource_class_kwargs={'s3_bucket': app.config['S3_BUCKET_NAME']})
 
 
 def setup_database():
