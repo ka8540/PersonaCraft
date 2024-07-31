@@ -89,7 +89,7 @@ function CharacterPage() {
         <div className='chat-dashboard'>
           <h4 className='chat-headingtext'>Unleash your imagination and create a friend who understands you like no one else</h4>
           {characters.length === 0 ? (
-              <div className='chat-dashboard-comp' onClick={() => navigate('/dashboard')}>Create new character +</div>
+              <div className='chat-dashboard-comp-2' onClick={() => navigate('/dashboard')}>Create new character +</div>
             ) : (
               <>
                 <div className='flex-comp'>

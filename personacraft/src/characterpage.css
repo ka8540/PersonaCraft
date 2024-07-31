@@ -116,6 +116,8 @@
   align-items: flex-start;
   justify-content: flex-start; 
   gap: 1.3em; 
+  margin-left: 20px;
+  margin-top: 50px;
 }
 
 .chat-dashboard-comp {
@@ -138,4 +140,23 @@
 
 .create-new {
   margin-left: 1em; 
+}
+
+.chat-dashboard-comp-2{
+  background-color: #f0f0f0;
+  width: 240px; 
+  margin-top: 70px; 
+  margin-left: 40px;
+  height: 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border-radius: 20px;
+  transition: border 0.3s ease;
+  box-shadow: 10px 10px 10px -5px rgba(0, 0, 0, 0.2);
+}
+
+.chat-dashboard-comp-2:hover {
+  border: 2px solid #a08bf3;
 }
