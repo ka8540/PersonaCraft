@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef  } from 'react';
 import './imagedashboard.css';
 import { useNavigate, useLocation } from 'react-router-dom';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -13,7 +13,7 @@ function ImageDashboard() {
     const location = useLocation();
     const [characters, setCharacters] = useState([]);
     const { characterId } = location.state || {};
-
+    const imageinputRef = useRef(null);
     useEffect(() => {
         const fetchImages = async () => {
             try {
@@ -127,6 +127,37 @@ function ImageDashboard() {
         }
     }, [selectedDiv]);
 
+    const handleImageUpload = async (event) => {
+        const file = event.target.files[0];
+        if (!file) {
+            return;
+        }
+    
+        const formData = new FormData();
+        formData.append('file', file);
+    
+        try {
+            const idToken = await AsyncStorage.getItem('idToken');
+            const response = await fetch(`http://127.0.0.1:5000/character_image/${characterId}`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${idToken}`
+                },
+                body: formData
+            });
+    
+            if (response.ok) {
+                alert('Image uploaded successfully');
+                navigate('/chatdashboard', { state: { characterId } } );
+            } else {
+                alert('Failed to upload image');
+            }
+        } catch (error) {
+            console.error('Error uploading image:', error);
+            alert('Error uploading image');
+        }
+    };
+
 
     return (
         <div className="container">
@@ -212,6 +243,16 @@ function ImageDashboard() {
                         <button onClick={handleSubmit} disabled={isLoading}>
                             {isLoading ? 'Submitting...' : 'Submit Selected Image'}
                         </button>
+                        <input
+                            type="file"
+                            style={{ display: 'none' }}
+                            ref={imageinputRef}
+                            onChange={handleImageUpload}
+                        />
+                        <button onClick={() => imageinputRef.current && imageinputRef.current.click()} disabled={isLoading}>
+                            {isLoading ? 'Submitting...' : 'Browse Image'}
+                        </button>
+
                     </>
                 )}
             </div>

@@ -88,7 +88,7 @@ class UploadCharacterImageAPI(Resource):
         self.s3 = boto3.client('s3')
         self.s3_bucket = kwargs['s3_bucket']
 
-    def post(self):
+    def post(self,character_id):
         token = request.headers.get('Authorization', '').split(' ')[1]
         jwt_user = cognitojwt.decode(
                 token,
@@ -118,7 +118,7 @@ class UploadCharacterImageAPI(Resource):
                     ExtraArgs={'ContentType': content_type}
                 )
                 image_url = f"https://{self.s3_bucket}.s3.amazonaws.com/{file_name}"
-                response = update_character_image_url(user_id, image_url)
+                response = update_character_image_url(character_id, image_url)
                 return make_response(jsonify({"url": image_url, "db": response}), 200)
             except NoCredentialsError as e:
                 return make_response(jsonify({"error": "Credentials not available"}), 403)

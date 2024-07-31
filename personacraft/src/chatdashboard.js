@@ -14,6 +14,7 @@ function ChatDashboard() {
     const location = useLocation();
     const [characters, setCharacters] = useState([]);
     const { characterId } = location.state || {};
+    const [profilePicUrl, setProfilePicUrl] = useState('');
 
     useEffect(() => {
         const fetchProfilePic = async () => {
@@ -25,14 +26,18 @@ function ChatDashboard() {
                         'Authorization': `Bearer ${idToken}`
                     }
                 });
-
+                console.log("Response:", response);
                 if (response.ok) {
                     const data = await response.json();
                     console.log(data);
-                    const jsonString = data[0].replace(/'/g, '"'); // Replace single quotes with double quotes
-                    const parsedUrl = JSON.parse(jsonString)[0];
-                    console.log("Parsed URL:", parsedUrl);
-                    setProfilePic(parsedUrl);
+                    let profilePicUrl = data[0]; 
+        
+                    if (typeof profilePicUrl === 'string' && profilePicUrl.startsWith("['") && profilePicUrl.endsWith("']")) {
+                        profilePicUrl = profilePicUrl.slice(2, -2);
+                    }
+        
+                    console.log("Profile Picture URL:", profilePicUrl);
+                    setProfilePic(profilePicUrl);
                 } else {
                     throw new Error('Failed to fetch profile picture');
                 }
@@ -131,10 +136,31 @@ function ChatDashboard() {
         }
     };
 
+    const fetchProfilePic = async () => {
+        try {
+            const idToken = await AsyncStorage.getItem('idToken');
+            const response = await fetch('http://127.0.0.1:5000/upload_image', {  
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${idToken}`
+                }
+            });
+            const data = await response.json();
+            if (response.ok) {
+                setProfilePicUrl(data[0]);
+            } else {
+                console.error('Failed to fetch profile picture');
+            }
+        } catch (error) {
+            console.error('Error fetching profile picture:', error);
+        }
+    };
+
     useEffect(() => {
         if (selectedDiv === 'chat-history') {
             fetchCharacters();
         }
+        fetchProfilePic();
     }, [selectedDiv]);
 
 
@@ -164,7 +190,7 @@ function ChatDashboard() {
                 </span>
                 Profile
                 </div>
-                
+
         <div className='dropdown'>
              <div
             className={`dropdown-header ${selectedDiv === 'chat-history' ? 'selected' : ''}`}
@@ -218,7 +244,11 @@ function ChatDashboard() {
                                 ) : (
                                     <>
                                         <p>{chat.text}</p>
-                                        <div className="profile-initials">M</div>
+                                        {profilePicUrl ? (
+                                            <img src={profilePicUrl} alt="Me" className="profile-pic" />
+                                        ) : (
+                                            <div className="profile-initials">M</div>
+                                        )}
                                     </>
                                 )}
                             </div>

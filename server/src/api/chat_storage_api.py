@@ -28,7 +28,7 @@ class StoredCharactersAPI(Resource):
             user_id = get_user_id(jwt_user['email'])
             if not user_id:
                 return make_response(jsonify({"message": "User not found"}), 404)
-            
+            print("inside the API")
             response = get_characters(user_id)
 
             if not response:

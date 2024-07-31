@@ -322,3 +322,15 @@
   margin-top: 10px;
   margin-left: 205px;
 }
+
+.input-1:hover{
+    border: 2px solid #6b4ae3;
+}
+
+.input-2:hover{
+    border: 2px solid #6b4ae3;
+}
+
+.input-3:hover{
+    border: 2px solid #6b4ae3;
+}

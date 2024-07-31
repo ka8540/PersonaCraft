@@ -47,7 +47,7 @@ api.add_resource(ProfileAPI,'/profile')
 api.add_resource(StoredCharactersAPI,'/getchacters')
 api.add_resource(StoredChatAPI,'/stored_chat')
 api.add_resource(UploadProfilePicAPI,'/upload_image',resource_class_kwargs={'s3_bucket': app.config['S3_BUCKET_NAME']})
-api.add_resource(UploadCharacterImageAPI,'/character_image',resource_class_kwargs={'s3_bucket': app.config['S3_BUCKET_NAME']})
+api.add_resource(UploadCharacterImageAPI,'/character_image/<int:character_id>',resource_class_kwargs={'s3_bucket': app.config['S3_BUCKET_NAME']})
 api.add_resource(BackgroundImageAPI,'/background_image',resource_class_kwargs={'s3_bucket': app.config['S3_BUCKET_NAME']})
 
 

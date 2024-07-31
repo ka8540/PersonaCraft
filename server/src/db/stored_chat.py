@@ -1,4 +1,5 @@
 from utilities.swen_344_db_utils import exec_commit, exec_get_one, exec_get_all
+import json 
 
 def get_characters(user_id):
     query = '''
@@ -11,14 +12,24 @@ def get_characters(user_id):
         user_id = %s;
     '''
     result = exec_get_all(query, (user_id,))
+    print(result)
     characters = []
     for row in result:
         character_name, profile_pic = row
+        print(row)
+        if isinstance(profile_pic, str):
+            try:
+                parsed_profile_pic = json.loads(profile_pic)
+            except json.JSONDecodeError:
+                parsed_profile_pic = profile_pic
+        else:
+            parsed_profile_pic = profile_pic
+        
         characters.append({
             "character_name": character_name,
-            "profile_pic": eval(profile_pic) if isinstance(profile_pic, str) else profile_pic  # Safely parse the profile_pic if it's a string representation of a list
+            "profile_pic": parsed_profile_pic
         })
-    
+    print(characters)
     return characters
 
 def get_chat_logs(user_id, character_name):
