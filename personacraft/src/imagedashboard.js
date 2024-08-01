@@ -18,7 +18,7 @@ function ImageDashboard() {
         const fetchImages = async () => {
             try {
                 const idToken = await AsyncStorage.getItem('idToken');
-                const response = await fetch(`http://127.0.0.1:5000/character_image/${characterId}`, {
+                const response = await fetch(`http://app-lb-2028084851.us-east-1.elb.amazonaws.com/character_image/${characterId}`, {
                     method: 'GET',
                     headers: {
                         'Authorization': `Bearer ${idToken}`
@@ -52,7 +52,7 @@ function ImageDashboard() {
         setIsLoading(true);
         try {
             const idToken = await AsyncStorage.getItem('idToken');
-            const response = await fetch(`http://127.0.0.1:5000/character_image/${characterId}`, {
+            const response = await fetch(`http://app-lb-2028084851.us-east-1.elb.amazonaws.com/character_image/${characterId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -103,7 +103,7 @@ function ImageDashboard() {
         try {
             const idToken = await AsyncStorage.getItem('idToken');
             console.log("Token in Page:", idToken);
-            const response = await fetch('http://127.0.0.1:5000/getchacters', { 
+            const response = await fetch('http://app-lb-2028084851.us-east-1.elb.amazonaws.com/getchacters', { 
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${idToken}`,
@@ -138,7 +138,7 @@ function ImageDashboard() {
     
         try {
             const idToken = await AsyncStorage.getItem('idToken');
-            const response = await fetch(`http://127.0.0.1:5000/character_image/${characterId}`, {
+            const response = await fetch(`http://app-lb-2028084851.us-east-1.elb.amazonaws.com/character_image/${characterId}`, {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${idToken}`

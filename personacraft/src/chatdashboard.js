@@ -20,7 +20,7 @@ function ChatDashboard() {
         const fetchProfilePic = async () => {
             try {
                 const idToken = await AsyncStorage.getItem('idToken');
-                const response = await fetch(`http://127.0.0.1:5000/profile_pic/${characterId}`, {
+                const response = await fetch(`http://app-lb-2028084851.us-east-1.elb.amazonaws.com/profile_pic/${characterId}`, {
                     method: 'GET',
                     headers: {
                         'Authorization': `Bearer ${idToken}`
@@ -65,7 +65,7 @@ function ChatDashboard() {
         setIsLoading(true);
         try {
             const idToken = await AsyncStorage.getItem('idToken');
-            const response = await fetch('http://127.0.0.1:5000/chat_with_character', {
+            const response = await fetch('http://app-lb-2028084851.us-east-1.elb.amazonaws.com/chat_with_character', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -118,7 +118,7 @@ function ChatDashboard() {
         try {
             const idToken = await AsyncStorage.getItem('idToken');
             console.log("Token in Page:", idToken);
-            const response = await fetch('http://127.0.0.1:5000/getchacters', { 
+            const response = await fetch('http://app-lb-2028084851.us-east-1.elb.amazonaws.com/getchacters', { 
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${idToken}`,
@@ -139,7 +139,7 @@ function ChatDashboard() {
     const fetchProfilePic = async () => {
         try {
             const idToken = await AsyncStorage.getItem('idToken');
-            const response = await fetch('http://127.0.0.1:5000/upload_image', {  
+            const response = await fetch('http://app-lb-2028084851.us-east-1.elb.amazonaws.com/upload_image', {  
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${idToken}`

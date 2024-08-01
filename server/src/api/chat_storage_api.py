@@ -7,7 +7,9 @@ import sys
 from db.character_creation import get_user_id
 from db.stored_chat import get_characters, get_chat_logs
 load_dotenv()
-API_KEY = sys.argv[1]
+import os 
+
+API_KEY = os.getenv('OPENAPI_KEY')
 
 REGION = 'us-east-1'
 USERPOOL_ID = 'us-east-1_EJkY3NEF3'

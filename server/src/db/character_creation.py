@@ -6,9 +6,10 @@ import requests
 import sys
 from dotenv import load_dotenv
 from flask import Flask, request, jsonify, make_response
+import os
 
 load_dotenv()
-API_KEY = sys.argv[1]
+API_KEY = os.getenv('OPENAPI_KEY')
 def create_character(user_id, **kwargs):
     insert_query = '''
         INSERT INTO CharacterTable (name, gender, personality_traits, background_story, age_range,

@@ -5,9 +5,9 @@ import cognitojwt
 from dotenv import load_dotenv
 import sys
 from db.character_creation import get_user_id, get_character_details, get_response, get_image,store_chat
-
+import os 
 load_dotenv()
-API_KEY = sys.argv[1]
+API_KEY = os.getenv('OPENAPI_KEY')
 
 REGION = 'us-east-1'
 USERPOOL_ID = 'us-east-1_EJkY3NEF3'

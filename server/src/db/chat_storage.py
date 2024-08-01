@@ -8,4 +8,5 @@ def store_chat(message,user_id,character_id,sender):
     return check_result
 
 
+
     

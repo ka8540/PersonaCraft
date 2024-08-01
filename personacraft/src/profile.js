@@ -23,7 +23,7 @@ const Profile = () => {
         const fetchProfile = async () => {
             try {
                 const idToken = await AsyncStorage.getItem('idToken');
-                const response = await fetch('http://127.0.0.1:5000/profile', {
+                const response = await fetch('http://app-lb-2028084851.us-east-1.elb.amazonaws.com/profile', {
                     method: 'GET',
                     headers: {
                         'Authorization': `Bearer ${idToken}`
@@ -76,7 +76,7 @@ const Profile = () => {
         try {
             const idToken = await AsyncStorage.getItem('idToken');
             console.log("Token in Page:", idToken);
-            const response = await fetch('http://127.0.0.1:5000/getchacters', { 
+            const response = await fetch('http://app-lb-2028084851.us-east-1.elb.amazonaws.com/getchacters', { 
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${idToken}`,
@@ -103,7 +103,7 @@ const Profile = () => {
     const fetchProfilePic = async () => {
         try {
             const idToken = await AsyncStorage.getItem('idToken');
-            const response = await fetch('http://127.0.0.1:5000/upload_image', {  
+            const response = await fetch('http://app-lb-2028084851.us-east-1.elb.amazonaws.com/upload_image', {  
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${idToken}`
@@ -131,7 +131,7 @@ const Profile = () => {
 
         try {
             const idToken = await AsyncStorage.getItem('idToken');
-            const response = await fetch('http://127.0.0.1:5000/upload_image', {
+            const response = await fetch('http://app-lb-2028084851.us-east-1.elb.amazonaws.com/upload_image', {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${idToken}`
@@ -167,7 +167,7 @@ const Profile = () => {
 
         try {
             const idToken = await AsyncStorage.getItem('idToken');
-            const response = await fetch('http://127.0.0.1:5000/background_image', {
+            const response = await fetch('http://app-lb-2028084851.us-east-1.elb.amazonaws.com/background_image', {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${idToken}`
@@ -191,7 +191,7 @@ const Profile = () => {
     const fetchBackgroundPic = async () => {
         try {
             const idToken = await AsyncStorage.getItem('idToken');
-            const response = await fetch('http://127.0.0.1:5000/background_image', {  
+            const response = await fetch('http://app-lb-2028084851.us-east-1.elb.amazonaws.com/background_image', {  
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${idToken}`

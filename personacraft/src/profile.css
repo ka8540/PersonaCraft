@@ -334,3 +334,34 @@
 .input-3:hover{
     border: 2px solid #6b4ae3;
 }
+
+@media (max-width: 1400px) {
+    .input-button {
+        left: 1225px;
+        background: transparent;
+        max-height: 50px;
+    }
+
+    .profile-card {
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+
+    .profile-details{
+        left: 300px;
+    }
+
+    .change-password{
+        left:685px
+    }
+
+    .profile-header{
+        left:300px
+    }
+
+    .profile-pic-div{
+        left: 320px;
+        bottom: 420px;
+    }
+
+}

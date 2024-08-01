@@ -47,7 +47,7 @@ function Dashboard() {
         try {
             const idToken = await AsyncStorage.getItem('idToken');
             console.log(idToken);
-            const response = await fetch('http://127.0.0.1:5000/create_character', {
+            const response = await fetch('http://app-lb-2028084851.us-east-1.elb.amazonaws.com/create_character', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -88,7 +88,7 @@ function Dashboard() {
         try {
             const idToken = await AsyncStorage.getItem('idToken');
             console.log("Token in Page:", idToken);
-            const response = await fetch('http://127.0.0.1:5000/getchacters', { 
+            const response = await fetch('http://app-lb-2028084851.us-east-1.elb.amazonaws.com/getchacters', { 
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${idToken}`,

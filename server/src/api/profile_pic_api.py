@@ -8,9 +8,10 @@ from botocore.exceptions import NoCredentialsError
 import werkzeug
 from dotenv import load_dotenv
 import sys
+import os
 
 load_dotenv()
-API_KEY = sys.argv[1]
+API_KEY = os.getenv('OPENAPI_KEY')
 
 REGION = 'us-east-1'
 USERPOOL_ID = 'us-east-1_EJkY3NEF3'
