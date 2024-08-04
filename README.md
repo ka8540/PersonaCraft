@@ -116,3 +116,5 @@ The **Chat Interface** in PersonaCraft is where the magic of interaction comes a
 PersonaCraft is not just a platform; it's a gateway to a new dimension of creativity and companionship. Whether you're a writer seeking inspiration, someone looking for a friendly chat, or a creative soul eager to explore new ideas, PersonaCraft offers a unique blend of storytelling and interaction that adapts and grows with you. Dive into your imagination and create characters that bring joy, wisdom, and adventure into your life.
 
 Start your journey today and see where your creativity takes you!
+
+[Watch the Video](https://www.youtube.com/watch?v=4wmEje7k_l0&t=47s)
