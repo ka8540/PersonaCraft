@@ -103,11 +103,11 @@
 
 .profile-header{
     background-color: #e3dcdc;
-    position: relative;
+    position: fixed;
     left: 320px;
     top: 45px;
     width: 75%;
-    max-height: 45%;
+    height: 45%;
     border-radius: 10px;
     box-shadow: 5px 10px 15px 0px rgba(0,0 ,0,0.6);
 }
@@ -205,7 +205,7 @@
 .change-password{
     background-color: #fff;
     width: 46%;
-    position: absolute;
+    position: fixed;
     top: 450px;
     left: 740px;
     height: 42%;
@@ -337,7 +337,7 @@
 
 @media (max-width: 1400px) {
     .input-button {
-        left: 1225px;
+        left: 1285px;
         background: transparent;
         max-height: 50px;
     }
@@ -352,11 +352,42 @@
     }
 
     .change-password{
-        left:685px
+        left:685px;
     }
 
     .profile-header{
-        left:300px
+        left:300px;
+    }
+
+    .profile-pic-div{
+        left: 320px;
+        bottom: 420px;
+    }
+
+}
+
+@media (max-width: 1300px) {
+    .input-button {
+        left: 1205px;
+        background: transparent;
+        max-height: 50px;
+    }
+
+    .profile-card {
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+
+    .profile-details{
+        left: 300px;
+    }
+
+    .change-password{
+        left:680px;
+    }
+
+    .profile-header{
+        left:300px;
     }
 
     .profile-pic-div{

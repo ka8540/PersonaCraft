@@ -4,6 +4,7 @@ import requests
 import cognitojwt
 from dotenv import load_dotenv
 import sys
+import urllib.parse
 from db.character_creation import get_user_id
 from db.stored_chat import get_characters, get_chat_logs
 load_dotenv()
@@ -59,14 +60,16 @@ class StoredChatAPI(Resource):
             user_id = get_user_id(jwt_user['email'])
             if not user_id:
                 return make_response(jsonify({"message": "User not found"}), 404)
+            print(user_id)
             parser = reqparse.RequestParser()
             parser.add_argument('character_name', type=str, required=True, help="character_name is required", location='args')
             args = parser.parse_args()
             character_name = args['character_name']
-            response = get_chat_logs(user_id,character_name)
+            character_name = urllib.parse.unquote(character_name)+ ' '
+            response = get_chat_logs(user_id, character_name)
 
             if not response:
-                return make_response(jsonify({"message":"no records found"}),404)
+                return make_response(jsonify({"message": "No records found"}), 407)
             
             chat_logs = []
             for log in response:
@@ -74,7 +77,7 @@ class StoredChatAPI(Resource):
                     "timestamp": log[0],
                     "sender": log[1],
                     "message": log[2],
-                    "character_id":log[3]
+                    "character_id": log[3]
                 })
 
             return jsonify({"chat_logs": chat_logs})    
