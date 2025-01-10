@@ -117,4 +117,4 @@ PersonaCraft is not just a platform; it's a gateway to a new dimension of creati
 
 Start your journey today and see where your creativity takes you!
 
-[Watch the Video](https://youtu.be/4wmEje7k_l0?si=WB01BQ6Jh62wzS8P)
+[Watch the Video](https://img.youtube.com/vi/4wmEje7k_l0/0.jpg)](https://youtu.be/4wmEje7k_l0?si=WB01BQ6Jh62wzS8P)
